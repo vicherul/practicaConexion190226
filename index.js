@@ -22,8 +22,8 @@ const client = new MongoClient(uri, {
 app.get('/post', async (req, res) => {
     try {
         await client.connect();
-    const database = client.db("SocialNetwork")
-    const posts = database.collection("Published")
+    const database = client.db("craft_beer")
+    const posts = database.collection("beer")
     const list = await posts.find({}).toArray();
     res.json({success: true, data: list})
     } catch (error) {
@@ -38,8 +38,8 @@ app.get('/post', async (req, res) => {
 app.post('/post', express.json(), async (req, res) =>{
     try {
         await client.connect();
-        const database = client.db("SocialNetwork")
-        const posts = database.collection("Published")
+        const database = client.db("craft_beer")
+        const posts = database.collection("beer")
         const result = await posts.insertOne(req.body)
         res.json({success: true, insertedId: result.insertedId})
     } catch (error) {
@@ -54,8 +54,8 @@ app.post('/post', express.json(), async (req, res) =>{
 app.put('/post/:id', express.json(), async (req, res)=> {
     try {
         await client.connect();
-        const database = client.db("SocialNetwork");
-        const posts = database.collection("Published");
+        const database = client.db("craft_beer");
+        const posts = database.collection("beer");
 
         const result = await posts.updateOne(
             { _id: new ObjectId(req.params.id)},
@@ -63,7 +63,7 @@ app.put('/post/:id', express.json(), async (req, res)=> {
         );
         
         if(result.matchedCount === 0){
-            res.status(404).json({sucess: false, message: "Producto no encontrado, vayase de vacaciones"})
+            res.status(404).json({success: false, message: "Producto no encontrado, vayase de vacaciones"})
         }else{
             res.json({success: true, message: "Se actualizo el registro", modifiedCount: result.modifiedCount})
         }
@@ -81,8 +81,8 @@ app.put('/post/:id', express.json(), async (req, res)=> {
 app.delete('/post/:id', async(req, res) => {
    try {
      await client.connect();
-    const database = client.db("SocialNetwork");
-    const posts = database.collection("Published");
+    const database = client.db("craft_beer");
+    const posts = database.collection("beer");
 
     const result = await posts.deleteOne({
         _id: new ObjectId(req.params.id)
