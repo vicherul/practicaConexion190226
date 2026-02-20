@@ -1,3 +1,4 @@
+// Importamos las dependencias necesarias
 import dotenv from 'dotenv'
 import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb'
 import express from 'express'
